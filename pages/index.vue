@@ -1,3 +1,3 @@
 <template>
-  <h1>Index pages</h1>
+  <h1>You are logged in</h1>
 </template>
