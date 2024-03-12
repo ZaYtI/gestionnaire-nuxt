@@ -1,8 +1,13 @@
 <script setup>
+import { useAuthStore } from '~/stores/auth';
+
 
 const error = ref(false)
 const email = ref('');
 const password = ref('');
+
+
+const store = useAuthStore()
 
 const router = useRouter()
 
@@ -31,6 +36,10 @@ const submitForm = async (event) => {
             password.value = ''
         }
         localStorage.setItem('sae-token',jsonResponse.token)
+        if(store.getToken == null || store.getToken == undefined){
+            store.setToken(token)
+        }
+        store.setIsLoggedIn(true)
         router.push('/')
     }
 }
