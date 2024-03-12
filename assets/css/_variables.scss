@@ -1,0 +1,47 @@
+// Override any Bootstrap variable here
+$transition-collapse:height .25s ease;
+$box-shadow: 0 0 5px rgba(100,100,100,0.5);
+$primary: #2F4E84;
+$input-placeholder-color: #a09f9f;
+
+// Or add any custom variable
+$navbar-submenu-margin: 1rem;
+$diagonal-item-angle: -7deg;
+
+$background-image-gradients: (
+    "grey": (linear-gradient(225deg, rgba(120,120,120,0.5) 0%, rgba(31,31,31,0.5) 100%)),
+    "green": (linear-gradient(225deg, rgba(31,249,19,0.25) 0%, rgba(0,248,8,0.25) 80.28%, rgba(50,248,0,0.25) 100%), radial-gradient(ellipse at 100% 0, rgba(41,248,0,0.36) 0%, rgba(31,249,19,0) 30%, rgba(92,249,19,0) 100%)),
+    "blue": (linear-gradient(225deg, rgba(19,230,249,0.25) 0%, rgba(0,190,248,0.25) 80.28%, rgba(0,190,248,0.25) 100%), radial-gradient(ellipse, rgba(0,132,248,0.5) 0%, rgba(23,19,249,0.5) 56.79%, rgba(19,88,249,0.5) 100%)),
+    "gold": (linear-gradient(225deg, rgba(249,210,19,0.5) 12.35%, rgba(248,65,0,0.5) 82.72%, rgba(248,65,0,0.5) 100%), radial-gradient(circle at 100% 0, rgba(248,65,0,0.78) 0%, rgba(249,210,19,0) 25%, rgba(249,210,19,0) 100%)),
+    "pink": (linear-gradient(225deg, rgba(249,19,19,0.25) 0%, rgba(248,0,0,0.25) 80.28%, rgba(248,0,0,0.25) 100%), radial-gradient(ellipse, rgba(248,0,0,0.5) 0%, rgba(249,19,19,0.5) 56.79%, rgba(249,19,19,0.5) 100%)),
+    "purple": (conic-gradient(from 90deg, #1f1f1f 0%, #787878 24.39%), radial-gradient(circle, #1c1c1c 0%, rgba(255,0,119,0) 98.77%)),
+    "light-blue": (linear-gradient(225deg, rgba(19,230,249,0.25) 0%, rgba(0,190,248,0.25) 80.28%, rgba(0,190,248,0.25) 100%), radial-gradient(circle at 100% 0, rgba(0,182,248,0.78) 0%, rgba(23,19,249,0.1) 20%, transparent 25%, rgba(19,88,249,0) 100%)),
+    "light-grey": #E6EEFF,
+    "red": linear-gradient(135deg, #ffcdb2 0%, #ffb4a2 48.77%, #e5989b 100%),
+    "grass": linear-gradient(135deg, #f0ead2 0%, #dde5b6 51.85%, #adc178 100%),
+    "blue-linear":  linear-gradient(135deg, #c4e8f3 0%, #c6f5fa 48.15%, #a3c4f3 100%),
+);
+
+
+$payzily-gradients: (
+    "blue": (linear-gradient(140deg,#3ea7e3,#127abe)),
+    "green": (linear-gradient(140deg,#1cb283,#2a8068)),
+    "orange": (linear-gradient(140deg,#ff7e58,#f24e4e)),
+    "black": (linear-gradient(140deg,#545454,#150d0f)),
+    "purple": (linear-gradient(140deg,#bc4283,#b21e6d)),
+    "pink": (linear-gradient(140deg,#f56868,#fa2d42)),
+    "yellow": (linear-gradient(140deg,#ffb158,#f57c3e)),
+    "red": (linear-gradient(140deg,#ef514d,#d7150a)),
+    "brown": (linear-gradient(140deg,#d39f75,#581a1a)),
+);
+
+
+$top-title-section-gradients: (
+    "orange": (linear-gradient(180deg, rgba(248,65,0,0.6) 0%, #f9d213 100%)),
+    "pink": (linear-gradient(180deg, #a445b2 0%, #d41872 50%, #ff0066 100%)),
+    "blue-purple": (linear-gradient(180deg, #2cd8d5 0%, #6b8dd6 50%, #8e37d7 100%)),
+    "green": (linear-gradient(180deg, #16a068 0%, #f4e83f 100%)),
+    "red-orange": (linear-gradient(180deg, #f80505 0%, #ff7b36 100%)),
+    "blue": (linear-gradient(180deg, #005bea 0%, #00c6fb 100%)),
+    "black": (linear-gradient(180deg, #1f1f1f 0%, #787878 100%)),
+);
