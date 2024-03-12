@@ -73,7 +73,7 @@ interface Schedules {
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         authenticated: false as boolean, 
-        token: localStorage.getItem('item') ?? null,
+        token: localStorage.getItem('sae-token') ?? null,
         project: null as Project | null,
         user: null as User | null,
         task: null as Task | null,
