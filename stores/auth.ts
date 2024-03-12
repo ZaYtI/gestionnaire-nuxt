@@ -82,7 +82,7 @@ export const useAuthStore = defineStore('auth', {
         group: null as UserGroup | null,
         contract: null as Contract | null,
         distribution: null as Distribution | null,
-        schedules : null as Schedules | null
+        schedules : null as Schedule | null
     }),
 
     getters: {
@@ -126,7 +126,7 @@ export const useAuthStore = defineStore('auth', {
             return this.distribution
         },
 
-        getSchedules(): Schedules | null{
+        getSchedules(): Schedule | null{
             return this.schedules
         }, 
 
