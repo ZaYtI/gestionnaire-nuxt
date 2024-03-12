@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 interface User {
-    int: number, 
+    int: number,
     firstName: string,
     lastName: string,
     email: string,
@@ -16,7 +16,7 @@ interface UserGroup {
     id: number,
     groupName: string,
     users: User[],
-    tasks: Task[], 
+    tasks: Task[],
     manager: User,
 }
 
@@ -24,7 +24,7 @@ interface Task {
     id: number,
     name: string,
     description: string,
-    estimatedTime: number,  
+    estimatedTime: number,
     priority: Priority,
     project: Project,
     userGroup: UserGroup,
@@ -45,9 +45,9 @@ interface Priority {
 }
 
 interface Contract {
-    id: number, 
-    maximalWeeklyHours: number, 
-    openingHour: number, 
+    id: number,
+    maximalWeeklyHours: number,
+    openingHour: number,
     closingHour: number,
     listUsers: User[],
 }
@@ -72,7 +72,7 @@ interface Schedules {
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        authenticated: false as boolean, 
+        authenticated: false as boolean,
         token: localStorage.getItem('sae-token') ?? null,
         project: null as Project | null,
         user: null as User | null,
@@ -82,7 +82,7 @@ export const useAuthStore = defineStore('auth', {
         group: null as UserGroup | null,
         contract: null as Contract | null,
         distribution: null as Distribution | null,
-        schedules : null as Schedules | null
+        schedules: null as Schedules | null
     }),
 
     getters: {
@@ -90,225 +90,233 @@ export const useAuthStore = defineStore('auth', {
             return this.authenticated
         },
 
-        getProject(): Project | null{
+        getIsLoggedIn(): boolean {
+            return !!localStorage.getItem('sae-token');
+        },
+
+        getProject(): Project | null {
             return this.project
         },
 
-        getToken(): string | null{
+        getToken(): string | null {
             return this.token
         },
 
-        getTask(): Task | null{
+        getTask(): Task | null {
             return this.task
         },
 
-        getPriority(): Priority | null{
+        getPriority(): Priority | null {
             return this.priority
         },
 
-        getHoursWorked(): number | null{
+        getHoursWorked(): number | null {
             return this.hours_worked
         },
 
-        getUser(): User | null{
+        getUser(): User | null {
             return this.user
         },
 
-        getUserGroup(): UserGroup | null{
+        getUserGroup(): UserGroup | null {
             return this.group
         },
 
-        getContract(): Contract | null{
+        getContract(): Contract | null {
             return this.contract
         },
 
-        getDistribution(): Distribution | null{
+        getDistribution(): Distribution | null {
             return this.distribution
         },
 
-        getSchedules(): Schedules | null{
+        getSchedules(): Schedules | null {
             return this.schedules
-        }, 
+        },
 
-        getUserRole(): string[]{
+        getUserRole(): string[] {
             return this.user?.roles ?? []
         }
 
     },
 
     actions: {
+
+        async setToken(newValue: string): Promise<void> {
+            this.token = newValue
+        },
         // Méthodes pour l'entité Contrat
-        async contract(): Promise<void>{
+        async contract(): Promise<void> {
             const response = await fetch('http:localhost:8083/api/contracts', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
 
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to get contracts');
             }
             this.contract = responseData
-        }, 
+        },
 
-        async specificContract(id: number): Promise<void>{
+        async specificContract(id: number): Promise<void> {
             const response = await fetch(`http:localhost:8083/api/contracts/${id}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to delete contract');
             }
             this.contract = responseData
         },
 
-        async createContract(contract: Contract): Promise<void>{
+        async createContract(contract: Contract): Promise<void> {
             const response = await fetch('http:localhost:8083/api/contracts', {
                 method: 'POST',
                 body: JSON.stringify(contract),
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
-                const responseData = await response.json()
-                if(responseData.status !== 200){
-                    throw new Error(responseData.message || 'Failed to create contract');
-                }
-                this.contract = responseData
+            const responseData = await response.json()
+            if (responseData.status !== 200) {
+                throw new Error(responseData.message || 'Failed to create contract');
+            }
+            this.contract = responseData
         },
 
-        async replaceContract(contract: Contract, id: number): Promise<void>{
+        async replaceContract(contract: Contract, id: number): Promise<void> {
             const response = await fetch(`http:localhost:8083/api/contracts/${id}`, {
                 method: 'PUT',
                 body: JSON.stringify(contract),
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to update contract');
             }
             this.contract = responseData
         },
 
-        async updateContract(contract: Contract, id: number): Promise<void>{
+        async updateContract(contract: Contract, id: number): Promise<void> {
             const response = await fetch(`http:localhost:8083/api/contracts/${id}`, {
                 method: 'PATCH',
                 body: JSON.stringify(contract),
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to update contract');
             }
             this.contract = responseData
         },
 
-        async deleteContract(id: number): Promise<void>{
+        async deleteContract(id: number): Promise<void> {
             const response = await fetch(`http:localhost:8083/api/contracts/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to delete contract');
             }
             this.contract = responseData
         },
 
         // Méthodes pour l'entité Distribution
-        async distribution(): Promise<void>{
+        async distribution(): Promise<void> {
             const response = await fetch('http:localhost:8083/api/distribution', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to get distribution');
             }
             this.distribution = responseData
         },
 
-        async specificDistribution(id: number): Promise<void>{
+        async specificDistribution(id: number): Promise<void> {
             const response = await fetch(`http:localhost:8083/api/distribution/${id}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to get distribution');
             }
             this.distribution = responseData
         },
 
-        async createDistribution(distribution: Distribution): Promise<void>{
+        async createDistribution(distribution: Distribution): Promise<void> {
             const response = await fetch('http:localhost:8083/api/distribution', {
                 method: 'POST',
                 body: JSON.stringify(distribution),
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to create distribution');
             }
             this.distribution = responseData
         },
 
-        async replaceDistribution(distribution: Distribution, id: number): Promise<void>{
+        async replaceDistribution(distribution: Distribution, id: number): Promise<void> {
             const response = await fetch(`http:localhost:8083/api/distribution/${id}`, {
                 method: 'PUT',
                 body: JSON.stringify(distribution),
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to update distribution');
             }
             this.distribution = responseData
         },
 
-        async updateDistribution(distribution: Distribution, id: number): Promise<void>{
+        async updateDistribution(distribution: Distribution, id: number): Promise<void> {
             const response = await fetch(`http:localhost:8083/api/distribution/${id}`, {
                 method: 'PATCH',
                 body: JSON.stringify(distribution),
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to update distribution');
             }
             this.distribution = responseData
         },
 
-        async deleteDistribution(id: number): Promise<void>{
+        async deleteDistribution(id: number): Promise<void> {
             const response = await fetch(`http:localhost:8083/api/distribution/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${this.token}`,            
+                    'Authorization': `Bearer ${this.token}`,
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 200){
+            if (responseData.status !== 200) {
                 throw new Error(responseData.message || 'Failed to delete distribution');
             }
             this.distribution = responseData
