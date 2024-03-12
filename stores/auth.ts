@@ -226,6 +226,7 @@ export const useAuthStore = defineStore('auth', {
             this.contract = responseData
         },
 
+        // Méthodes pour l'entité Distribution
         async distribution(): Promise<void>{
             const response = await fetch('http:localhost:8083/api/distribution', {
                 method: 'GET',
@@ -239,5 +240,79 @@ export const useAuthStore = defineStore('auth', {
             }
             this.distribution = responseData
         },
+
+        async specificDistribution(id: number): Promise<void>{
+            const response = await fetch(`http:localhost:8083/api/distribution/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to get distribution');
+            }
+            this.distribution = responseData
+        },
+
+        async createDistribution(distribution: Distribution): Promise<void>{
+            const response = await fetch('http:localhost:8083/api/distribution', {
+                method: 'POST',
+                body: JSON.stringify(distribution),
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to create distribution');
+            }
+            this.distribution = responseData
+        },
+
+        async replaceDistribution(distribution: Distribution, id: number): Promise<void>{
+            const response = await fetch(`http:localhost:8083/api/distribution/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify(distribution),
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to update distribution');
+            }
+            this.distribution = responseData
+        },
+
+        async updateDistribution(distribution: Distribution, id: number): Promise<void>{
+            const response = await fetch(`http:localhost:8083/api/distribution/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(distribution),
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to update distribution');
+            }
+            this.distribution = responseData
+        },
+
+        async deleteDistribution(id: number): Promise<void>{
+            const response = await fetch(`http:localhost:8083/api/distribution/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to delete distribution');
+            }
+            this.distribution = responseData
+        },
+
     }
 })
