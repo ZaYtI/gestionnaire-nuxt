@@ -153,21 +153,80 @@ export const useAuthStore = defineStore('auth', {
             this.contract = responseData
         }, 
 
-        async createContract(contract: Contract): Promise<void>{
-            const response = await fetch('http:localhost:8083/api/contracts', {
-                method: 'POST',
+        async specificContract(id: number): Promise<void>{
+            const response = await fetch(`http:localhost:8083/api/contracts/${id}`, {
+                method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${this.token}`,            
                 }
             })
             const responseData = await response.json()
-            if(responseData.status !== 201){
-                throw new Error(responseData.message || 'Failed to create contract');
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to delete contract');
             }
             this.contract = responseData
         },
 
-        async cistribution(): Promise<void>{
+        async createContract(contract: Contract): Promise<void>{
+            const response = await fetch('http:localhost:8083/api/contracts', {
+                method: 'POST',
+                body: JSON.stringify(contract),
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+                const responseData = await response.json()
+                if(responseData.status !== 200){
+                    throw new Error(responseData.message || 'Failed to create contract');
+                }
+                this.contract = responseData
+        },
+
+        async replaceContract(contract: Contract, id: number): Promise<void>{
+            const response = await fetch(`http:localhost:8083/api/contracts/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify(contract),
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to update contract');
+            }
+            this.contract = responseData
+        },
+
+        async updateContract(contract: Contract, id: number): Promise<void>{
+            const response = await fetch(`http:localhost:8083/api/contracts/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(contract),
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to update contract');
+            }
+            this.contract = responseData
+        },
+
+        async deleteContract(id: number): Promise<void>{
+            const response = await fetch(`http:localhost:8083/api/contracts/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 200){
+                throw new Error(responseData.message || 'Failed to delete contract');
+            }
+            this.contract = responseData
+        },
+
+        async distribution(): Promise<void>{
             const response = await fetch('http:localhost:8083/api/distribution', {
                 method: 'GET',
                 headers: {
