@@ -62,7 +62,7 @@ interface Distribution {
     date: Date,
 }
 
-interface Schedules {
+interface Schedule {
     id: number,
     user: User,
     task: Task,
