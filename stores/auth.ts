@@ -30,13 +30,14 @@ interface Task {
     userGroup: UserGroup,
 }
 
-interface Priority {
+interface Project {
     id: number,
     priority: string,
+    estimatedTime: number,
     tasks: Task[],
 }
 
-interface Project {
+interface Priority {
     id: number,
     name: string,
     color: string,
@@ -136,7 +137,8 @@ export const useAuthStore = defineStore('auth', {
     },
 
     actions: {
-        async Contract(): Promise<void>{
+        // Méthodes pour l'entité Contrat
+        async contract(): Promise<void>{
             const response = await fetch('http:localhost:8083/api/contracts', {
                 method: 'GET',
                 headers: {
@@ -151,9 +153,21 @@ export const useAuthStore = defineStore('auth', {
             this.contract = responseData
         }, 
 
+        async createContract(contract: Contract): Promise<void>{
+            const response = await fetch('http:localhost:8083/api/contracts', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${this.token}`,            
+                }
+            })
+            const responseData = await response.json()
+            if(responseData.status !== 201){
+                throw new Error(responseData.message || 'Failed to create contract');
+            }
+            this.contract = responseData
+        },
 
-
-        async Distribution(): Promise<void>{
+        async cistribution(): Promise<void>{
             const response = await fetch('http:localhost:8083/api/distribution', {
                 method: 'GET',
                 headers: {
