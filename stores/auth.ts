@@ -74,7 +74,6 @@ export const useAuthStore = defineStore('auth', {
     state: () => ({
         authenticated: false as boolean,
         token: localStorage.getItem('sae-token') ?? null,
-        isLoggedIn: !!localStorage.getItem('sae-token'),
         project: null as Project | null,
         user: null as User | null,
         task: null as Task | null,
@@ -92,7 +91,7 @@ export const useAuthStore = defineStore('auth', {
         },
 
         getIsLoggedIn(): boolean {
-            return this.isLoggedIn;
+            return !!localStorage.getItem('sae-token');
         },
 
         getProject(): Project | null {
@@ -142,10 +141,6 @@ export const useAuthStore = defineStore('auth', {
     },
 
     actions: {
-
-        async setIsLoggedIn(newValue: boolean): Promise<void> {
-            this.isLoggedIn = newValue
-        },
 
         async setToken(newValue: string): Promise<void> {
             this.token = newValue
